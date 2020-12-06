@@ -104,6 +104,7 @@ static NSString * const EMMethodKeyInsertMessage = @"insertMessage";
 static NSString * const EMMethodKeyAppendMessage = @"appendMessage";
 static NSString * const EMMethodKeyUpdateConversationMessage = @"updateConversationMessage";
 static NSString * const EMMethodKeyGetMessageAttachmentPath = @"getMessageAttachmentPath";
+static NSString * const SetExtField = @"setExtField";
 
 #pragma mark - EMChatroomManagerWrapper
 

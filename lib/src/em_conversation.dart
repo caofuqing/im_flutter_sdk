@@ -24,11 +24,13 @@ class EMConversation {
   /// @nodoc
   EMConversation(String conversationId) : _conversationId = conversationId;
 
+
+
   /// @nodoc
   EMConversation.from(Map data)
       : _conversationId = data['id'],
         _type = fromEMConversationType(data['type']),
-        _extField = data['ext'];
+        _extField = formExt(data['ext']);
 
   /// 获取此对话中未读取的消息数量.
   Future<int> getUnreadMsgCount() async {
@@ -39,6 +41,9 @@ class EMConversation {
     }
     return -1; //-1 means error/unknown
   }
+
+
+
 
   /// 给Conversation设置扩展.
   void setExtField(String ext) {
@@ -180,6 +185,13 @@ class EMConversation {
     Map<String, dynamic> result = await _emConversationChannel
         .invokeMethod(EMSDKMethod.getLastMessage, {"id": _conversationId});
     if (result['success']) {
+
+      // print("这个是消息返回的");
+      //
+      // print(result.toString());
+      //
+      // print("这个是消息end====");
+
       return EMMessage.from(result['message']);
     }
     return null;

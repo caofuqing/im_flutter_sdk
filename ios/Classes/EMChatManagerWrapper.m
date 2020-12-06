@@ -202,6 +202,36 @@
 // TODO: ios需调添加该实现
 - (void)downloadFile:(NSDictionary *)param result:(FlutterResult)result {
     
+    
+
+    __weak typeof(self)weakSelf = self;
+    EMMessage * msg = [EMHelper dictionaryToMessage:param[@"message"]];
+    [EMClient.sharedClient.chatManager downloadMessageAttachment:msg progress:^(int progress) {
+    } completion:^(EMMessage *message, EMError *error) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        if (!error) {
+            dic[@"success"] = @YES;
+        }else {
+            dic[@"success"] = @NO;
+            dic[@"code"] = @(error.code);
+            dic[@"desc"] = error.errorDescription;
+        }
+        result(dic);
+    }];
+    
+    
+//    [EMClient.sharedClient.chatManager downloadMessageThumbnail:[EMHelper dictionaryToMessage:param]
+//                                                       progress:^(int progress)
+//     {
+//
+//    } completion:^(EMMessage *message, EMError *error)
+//     {
+//
+//    }];
+    
+    
+    
+    
 }
 
 

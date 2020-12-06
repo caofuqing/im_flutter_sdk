@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -712,7 +713,6 @@ class EMContact {
 /// @nodoc  EMMessageBody - body of message.
 abstract class EMMessageBody {
   toDataMap();
-
   static EMMessageBody from(Map data) {
     switch (data['type']) {
       case 1:
@@ -1043,6 +1043,17 @@ toEMConversationType(EMConversationType type) {
       return 0;
   }
 }
+
+formExt (dynamic ext) {
+
+  if(ext is String){
+    return ext;
+  }
+  if(ext is Map){
+    return json.encode(ext);
+  }
+}
+
 
 /// @nodoc 会话类型 int 数据类型转 EMConversationType
 fromEMConversationType(int type) {

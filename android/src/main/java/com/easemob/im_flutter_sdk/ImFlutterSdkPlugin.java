@@ -89,11 +89,12 @@ public class ImFlutterSdkPlugin {
 @SuppressWarnings("unchecked")
 class EMWrapperCallBack implements EMCallBack {
 
+    private  int usecont = 0;
+    private Result result;
     EMWrapperCallBack(Result result) {
         this.result = result;
+        this.usecont = 0;
     }
-
-    private Result result;
 
     void post(Runnable runnable) {
         ImFlutterSdkPlugin.handler.post(runnable);
@@ -104,6 +105,11 @@ class EMWrapperCallBack implements EMCallBack {
         post(new Runnable() {
                  @Override
                  public void run() {
+                     usecont++;
+                     if(usecont >1){
+                         return;
+                     }
+
                      Map<String, Object> data = new HashMap<String, Object>();
                      data.put("success", Boolean.TRUE);
                      EMLog.e("callback", "onSuccess");
@@ -118,6 +124,10 @@ class EMWrapperCallBack implements EMCallBack {
         post(new Runnable() {
             @Override
             public void run() {
+                usecont++;
+                if(usecont >1){
+                    return;
+                }
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("success", Boolean.FALSE);
                 data.put("code", code);

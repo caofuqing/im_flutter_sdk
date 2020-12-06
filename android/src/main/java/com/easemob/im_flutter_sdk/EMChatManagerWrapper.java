@@ -167,7 +167,9 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
         }else if(EMSDKMethod.updateChatMessage.equals(call.method)) {
             updateMessage(call.arguments, result);
         }else if(EMSDKMethod.downloadAttachment.equals(call.method)) {
-            downloadAttachment(call.arguments, result);
+
+                downloadAttachment(call.arguments, result);
+
         }else if(EMSDKMethod.downloadThumbnail.equals(call.method)) {
             downloadThumbnail(call.arguments, result);
         }else if(EMSDKMethod.importMessages.equals(call.method)) {
@@ -356,7 +358,7 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
 
     }
 
-    private void downloadAttachment(Object args, Result result) {
+    private void downloadAttachment(Object args, Result result)  {
         JSONObject argMap = (JSONObject)args;
         EMMessage message = EMHelper.convertDataMapToMessage(argMap);
         manager.downloadAttachment(message);
@@ -384,7 +386,6 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
     }
 
     private void getConversationsByType(Object args, Result result) {
-
         try {
             JSONObject argMap = (JSONObject)args;
             int type = argMap.getInt("type");

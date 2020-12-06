@@ -1,5 +1,6 @@
 import "dart:async";
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 
@@ -215,14 +216,21 @@ class EMChatManager {
     String remoteUrl,
     String localFilePath,
     Map<String, String> headers,
+        EMMessage message,
       {onSuccess(),
       onError(int code, String desc)}) {
-    Future<Map> result = _emChatManagerChannel.invokeMethod(
-        EMSDKMethod.downloadFile, {
+    Map pardata =  {
       "remoteUrl": remoteUrl,
       "localFilePath": localFilePath,
-      "headers": headers
-    });
+      "headers": headers,
+    };
+    if (Platform.isAndroid) {
+    }else{
+      pardata[ "message"] =message.toDataMap();
+    }
+
+    Future<Map> result = _emChatManagerChannel.invokeMethod(
+        EMSDKMethod.downloadFile,pardata);
     result.then((response) {
       if (response['success']) {
         if (onSuccess != null) onSuccess();

@@ -3,6 +3,7 @@ package com.easemob.im_flutter_sdk;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.hyphenate.chat.EMChatRoom;
@@ -91,10 +92,14 @@ class EMHelper {
                     message = EMMessage.createSendMessage(Type.VIDEO);
                     String videoUrl = data_body.getString("localUrl");
                     int videoDuration = data_body.getInt("videoDuration");
-                    String fileLength = data_body.getString("fileLength");
+//                    String fileLength = data_body.getString("fileLength");
                     File videoFile = new File(videoUrl);
+//                    videoFile.length()
                     if (videoFile.exists()){
-                        EMVideoMessageBody videoMessageBody = new EMVideoMessageBody(videoUrl,getThumbBitmap(videoUrl),videoDuration,Integer.parseInt(fileLength));
+                        EMVideoMessageBody videoMessageBody = new EMVideoMessageBody(videoUrl,getThumbBitmap(videoUrl),videoDuration,
+//                                Integer.parseInt(fileLength)
+                                videoFile.length()
+                        );
                         message.addBody(videoMessageBody);
                         setCurrency(message,emChatType,data_to);
                     }

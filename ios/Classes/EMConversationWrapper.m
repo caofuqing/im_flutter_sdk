@@ -58,6 +58,10 @@
         [self updateConversationMessage:call.arguments result:result];
     } else if ([EMMethodKeyGetMessageAttachmentPath isEqualToString:call.method]) {
         [self getMessageAttachmentPath:call.arguments result:result];
+    }else if( [SetExtField isEqualToString:call.method] ){
+        
+        [self setExtField:call.arguments result:result];
+        
     } else {
         [super handleMethodCall:call result:result];
     }
@@ -287,6 +291,37 @@
         [conversation updateMessageChange:[EMHelper dictionaryToMessage:msgDict]
                               error:nil];
     }];
+}
+
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
+
+-(void)setExtField:(NSDictionary *)param
+            result:(FlutterResult)result
+{
+            [self getConversationWithParam:param
+                      completion:^(EMConversation *conversation)
+            {
+                NSString *extString = param[@"ext"];
+                NSDictionary  *data  = [self dictionaryWithJsonString:extString];
+                [conversation setExt:data];
+        
+                
+            }];
 }
 
 // TODO: ?

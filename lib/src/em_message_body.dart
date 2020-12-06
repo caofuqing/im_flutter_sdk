@@ -283,8 +283,8 @@ class EMNormalFileMessageBody extends EMFileMessageBody {
   /// 文件大小
   Future<int> get fileSize async {
     //lazy load file size
-    if (_fileSize == null) {
-      _fileSize = await _file.length();
+    if (_fileSize == null &&  _file != null) {
+      _fileSize = await _file?.length();
     }
     return _fileSize;
   }
@@ -339,7 +339,7 @@ class EMVoiceMessageBody extends EMFileMessageBody {
   /// 文件大小
   Future<int> get getFileLength async {
     if (_fileLength == null) {
-      _fileLength = await _file.length();
+      _fileLength = await _file?.length();
     }
     return _fileLength;
   }
@@ -394,7 +394,7 @@ class EMVideoMessageBody extends EMFileMessageBody {
   /// 文件大小
   Future<int> get getFileLength async {
     if (_fileLength == null) {
-      _fileLength = await _file.length();
+      _fileLength = await _file?.length();
     }
     return _fileLength;
   }

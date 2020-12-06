@@ -154,6 +154,7 @@
             NSString *localUrl = msgBodyDict[@"localUrl"];
             long long fileLength = [msgBodyDict[@"fileLength"] longLongValue];
             body = [[EMFileMessageBody alloc] initWithLocalPath:localUrl displayName:@"file"];
+            ((EMFileMessageBody *)body).remotePath = msgBodyDict[@"remoteUrl"];
             ((EMFileMessageBody *)body).fileLength = fileLength;
         }
             break;
@@ -182,6 +183,7 @@
                                                 ext:ext];
     ret.chatType = chatType;
     
+    
     if (![aDictionary[@"msgId"] isKindOfClass:[NSNull class]]) {
         ret.messageId = aDictionary[@"msgId"];
     }
@@ -199,6 +201,7 @@
     } else {
         ret.direction = EMMessageDirectionReceive;
     }
+    
     
     return ret;
 }

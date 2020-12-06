@@ -17,7 +17,9 @@
                           registrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     if(self = [super initWithChannelName:aChannelName
                            registrar:registrar]) {
-       [EMClient.sharedClient.contactManager addDelegate:self delegateQueue:nil];
+       //[EMClient.sharedClient.contactManager addDelegate:self delegateQueue:nil];
+         [EMClient.sharedClient.contactManager addDelegate:self delegateQueue:nil];
+
     }
     return self;
 }
