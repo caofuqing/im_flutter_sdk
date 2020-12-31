@@ -111,6 +111,13 @@
 
 - (void)ackMessageRead:(NSDictionary *)param result:(FlutterResult)result {
     
+    [[EMClient sharedClient].chatManager sendMessageReadAck:param[@"id"] toUser:param[@"to"] completion:^(EMError *aError) {
+        if (!aError) {
+             NSLog(@"发送已读回执成功");
+        } else {
+            NSLog(@"发送已读回执失败的原因 --- %@", aError.errorDescription);
+        }
+    }];
 }
 
 - (void)recallMessage:(NSDictionary *)param result:(FlutterResult)result {
